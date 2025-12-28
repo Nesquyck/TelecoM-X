@@ -1,0 +1,43 @@
+Análise de Evasão de Clientes (Churn) - TelecomX
+1. Introdução
+Este projeto visa analisar os dados de clientes da TelecomX para identificar os principais fatores que contribuem para a evasão de clientes (Churn). O objetivo é fornecer insights acionáveis que possam ajudar a empresa a desenvolver estratégias mais eficazes de retenção e, consequentemente, melhorar a satisfação e a lealdade do cliente.
+
+2. Objetivo da Análise
+Compreender a estrutura e a qualidade dos dados de clientes.
+Identificar padrões e características de clientes que evadem vs. os que permanecem.
+Analisar a influência de variáveis demográficas, contratuais, de serviço e financeiras no Churn.
+Desenvolver recomendações estratégicas para reduzir a taxa de evasão.
+3. Fonte de Dados
+Os dados foram obtidos diretamente da API da TelecomX, disponível em challenge2-data-science/TelecomX_Data.json. O dataset contém informações detalhadas sobre cada cliente, incluindo dados demográficos, serviços contratados, informações de conta e o status de Churn.
+
+4. Limpeza e Tratamento de Dados
+As principais etapas de limpeza e tratamento de dados incluíram:
+
+Importação: Carregamento dos dados JSON para um DataFrame Pandas.
+Expansão de Dados Aninhados: As colunas aninhadas (customer, phone, internet, account) foram normalizadas e expandidas em novas colunas para uma estrutura tabular plana.
+Tratamento de Charges.Total: Identificação e remoção de 11 registros com valores não numéricos (espaços vazios), seguido da conversão da coluna para o tipo float.
+Tratamento de Churn: Remoção de linhas com valores vazios ('') na coluna Churn para garantir consistência binária ('Yes'/'No').
+Criação de Contas_Diarias: Cálculo do custo diário do serviço (Charges_Monthly / 30) para uma análise mais granular.
+Padronização de Variáveis: Conversão de variáveis binárias ('Yes'/'No', 'Female'/'Male') para 1/0. Tratamento de valores como 'No internet service'/'No phone service' para 'No'.
+Renomeação de Colunas: Padronização dos nomes de colunas como Charges.Monthly para Charges_Monthly e Charges.Total para Charges_Total.
+Verificações Gerais: Confirmação da ausência de valores nulos e linhas duplicadas após todos os tratamentos.
+5. Análise Exploratória de Dados (EDA)
+A EDA focou em visualizar distribuições e relações entre variáveis e o Churn:
+
+Distribuição de Churn: A análise revelou que aproximadamente 26.6% dos clientes da TelecomX evadem, indicando a criticidade do problema.
+Variáveis Numéricas: Histograma e KDE plots mostraram que clientes com baixo tenure (poucos meses de contrato) e altas Charges_Monthly / Contas_Diarias são mais propensos ao churn. Clientes com baixo Charges_Total também demonstram maior evasão, consistente com o baixo tenure.
+Variáveis Categóricas: Gráficos de contagem destacaram que contratos 'Month-to-month', o serviço 'Fiber optic', a ausência de serviços adicionais (segurança, backup, suporte técnico) e o método de pagamento 'Electronic check' estão fortemente associados a maiores taxas de evasão.
+Correlações Adicionais (Extra):
+tenure possui uma correlação negativa forte com Churn, enquanto Charges_Monthly e Contas_Diarias possuem correlação positiva.
+Clientes com menos serviços contratados apresentam uma maior probabilidade de Churn, sugerindo que a agregação de serviços contribui para a retenção.
+6. Conclusões e Insights
+Vulnerabilidade dos Iniciais: Os primeiros meses de serviço e a flexibilidade dos contratos mês a mês são períodos críticos para a retenção.
+Serviços e Custo-Benefício: Problemas percebidos no serviço de fibra óptica e a sensibilidade a custos mais elevados são drivers de churn. Serviços adicionais funcionam como um fator de retenção.
+Experiência de Pagamento: O método de 'Electronic check' está ligado a maior churn, sugerindo atritos na experiência do cliente.
+Segmentos de Risco: Idosos, clientes sem parceiros ou dependentes mostram maior tendência a evadir.
+7. Recomendações
+Foco em Onboarding e Contratos Flexíveis: Implementar programas robustos de onboarding e oferecer incentivos para clientes Month-to-month migrarem para contratos de longo prazo.
+Melhoria na Qualidade de Serviços: Investigar problemas com 'Fiber optic' e promover ativamente os benefícios dos serviços adicionais para agregar valor.
+Otimização da Experiência de Pagamento: Analisar e melhorar a jornada do cliente que utiliza 'Electronic check' para identificar e resolver pontos de atrito.
+Segmentação e Ofertas Personalizadas: Desenvolver campanhas de retenção direcionadas a segmentos de alto risco (ex: idosos, clientes com alto Charges_Monthly).
+Análise Competitiva: Realizar benchmarking com concorrentes para entender suas ofertas e estratégias de preços.
